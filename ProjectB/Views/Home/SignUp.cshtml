@@ -1,0 +1,93 @@
+﻿@{
+    ViewData["Title"] = "Sign Up";
+}
+
+@model ProjectB.Models.SignUp
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="SignUp" method="post" id="SignUpForm">
+    <div class="form-group m-3">
+        <label for="FullName">Full Name</label>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="First Name" asp-for="FirstName" required />
+            <input type="text" class="form-control" placeholder="Last Name" asp-for="LastName" required />
+        </div>
+    </div>
+
+    <div class="form-group m-3">
+        <label for="Username">Username</label>
+        <input type="text" class="form-control" id="Username" placeholder="Username" asp-for="Username" required>
+    </div>
+
+    <div class="form-group m-3">
+        <label for="Email">Email address</label>
+        <input type="email" class="form-control" id="Email" placeholder="Enter email" asp-for="Email" required>
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+
+    <div class="form-group m-3">
+        <label for="Password">Password</label>
+        <input type="password" class="form-control" id="Password" placeholder="Password" asp-for="Password" required>
+    </div>
+
+    <div class="form-group m-3">
+        <label for="ConfirmPassword">Confirm Password</label>
+        <input type="password" class="form-control" id="ConfirmPassword" placeholder="Confirm Password" asp-for="ConfirmPassword" required>
+        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+    </div>
+
+    <div class="form-group m-3">
+        <label for="aType" class="form-label">Account Type</label>
+        <select class="form-select" id="aType" aria-label="Account Type" asp-for="AccountType" required>
+            <option value="1">Student</option>
+            <option value="2">Teacher</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-secondary m-2" id="SubmitBtn" disabled>Submit</button>
+
+    <div class="m-3">
+        <a class="primary" asp-action="SignIn">Already have an account? Continue to sign in.</a>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('SignUpForm');
+            const submitBtn = document.getElementById('SubmitBtn');
+
+            // Form validation on input change
+            function validateForm() {
+                const inputs = form.querySelectorAll('input[required], select[required]');
+                let allValid = true;
+
+                // Check if all required inputs have a value
+                inputs.forEach(input => {
+                    if (!input.value.trim()) {
+                        allValid = false;
+                    }
+                });
+
+                // Enable or disable the submit button
+                if (allValid) {
+                    submitBtn.classList.remove('btn-secondary');
+                    submitBtn.classList.add('btn-primary');
+                    submitBtn.disabled = false; // Enable submit button
+                } else {
+                    submitBtn.classList.remove('btn-primary');
+                    submitBtn.classList.add('btn-secondary');
+                    submitBtn.disabled = true; // Disable submit button
+                }
+            }
+
+            // Add event listeners for each required field
+            const inputs = form.querySelectorAll('input[required], select[required]');
+            inputs.forEach(input => {
+                input.addEventListener('input', validateForm);
+            });
+
+            validateForm(); // Run on initial page load to set correct state of the button
+        })
+    </script>
+}

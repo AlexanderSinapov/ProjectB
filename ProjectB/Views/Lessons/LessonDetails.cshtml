@@ -1,0 +1,78 @@
+﻿@model ProjectB.Models.Lessons
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>@Model.Title</h1>
+            <p class="text-muted">Created by @Model.User.Username on @Model.CreatedAt.ToString("MMM dd, yyyy")</p>
+
+            @if (ViewBag.CanEdit)
+            {
+                    <a href="#" class="btn btn-primary mb-3" onclick="enableEdit()">Edit</a>
+
+
+                    <form id="lessonForm" asp-action="Edit" method="post" class="@(ViewBag.CanEdit ? "" : "readonly")">
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <input type="text" asp-for="Description" class="form-control" readonly="@(!ViewBag.CanEdit)" />
+                        </div>
+
+                        @if (!string.IsNullOrEmpty(Model.VideoUrl))
+                        {
+                            <div class="mb-3">
+                                <label class="form-label">Video</label>
+                                <input type="url" asp-for="VideoUrl" class="form-control" readonly="@(!ViewBag.CanEdit)" />
+                                <div class="mt-2">
+                                    <a href="@Model.VideoUrl" target="_blank" class="btn btn-secondary">View Video</a>
+                                </div>
+                            </div>
+                        }
+
+                        @if (!string.IsNullOrEmpty(Model.DocumentUrl))
+                        {
+                            <div class="mb-3">
+                                <label class="form-label">Document</label>
+                                <input type="url" asp-for="DocumentUrl" class="form-control" readonly="@(!ViewBag.CanEdit)" />
+                                <div class="mt-2">
+                                    <a href="@Model.DocumentUrl" target="_blank" class="btn btn-secondary">View Document</a>
+                                </div>
+                            </div>
+                        }
+
+                    <div class="mb-3">
+                        <label class="form-label">Content</label>
+                        <textarea asp-for="TextContent" class="form-control" rows="10" readonly="@(!ViewBag.CanEdit)"></textarea>
+                    </div>
+
+                    <div id="editButtons" style="display: none;">
+                        <button type="submit" class="btn btn-success">Save Changes</button>
+                        <button type="button" class="btn btn-danger" onclick="disableEdit()">Cancel</button>
+                    </div>
+                </form>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function enableEdit() {
+            document.querySelectorAll('#lessonForm input, #lessonForm textarea').forEach(el => {
+                el.readOnly = false;
+            });
+            document.getElementById('editButtons').style.display = 'block';
+        }
+
+        function disableEdit() {
+            document.querySelectorAll('#lessonForm input, #lessonForm textarea').forEach(el => {
+                el.readOnly = true;
+            });
+            document.getElementById('editButtons').style.display = 'none';
+        }
+    </script>
+}

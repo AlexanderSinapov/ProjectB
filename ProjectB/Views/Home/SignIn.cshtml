@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "Sign In";
+}
+
+@model ProjectB.Models.SignIn
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="SignIn" method="post" id="SignInForm">
+    @Html.AntiForgeryToken()
+
+    <div class="form-group m-3">
+        <label for="Email">Email address</label>
+        <input type="email" class="form-control" id="Email" placeholder="Enter email" asp-for="Email" required>
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group m-3">
+        <label for="Password">Password</label>
+        <input type="password" class="form-control" id="Password" placeholder="Password" asp-for="Password" required>
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-secondary m-2" id="SubmitBtn2">Submit</button>
+
+    <div class="m-3">
+        <a class="primary" asp-action="SignUp">Don't have an account? Go to sign up.</a>
+    </div>
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+</form>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('SignInForm');
+            const submitBtn = document.getElementById('SubmitBtn2');
+
+            function validateForm() {
+                const inputs = form.querySelectorAll('input[required]');
+                let allValid = true;
+
+                inputs.forEach(input => {
+                    if (!input.value.trim()) {
+                        allValid = false;
+                    }
+                });
+
+                if (allValid) {
+                    submitBtn.classList.remove('btn-secondary');
+                    submitBtn.classList.add('btn-primary');
+                    submitBtn.disabled = false;
+                } else {
+                    submitBtn.classList.remove('btn-primary');
+                    submitBtn.classList.add('btn-secondary');
+                    submitBtn.disabled = true;
+                }
+            }
+
+            const inputs = form.querySelectorAll('input[required]');
+            inputs.forEach(input => {
+                input.addEventListener('input', validateForm);
+            });
+
+            validateForm();
+        })
+    </script>
+}

@@ -1,0 +1,51 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    var showCookieNotice = Context.Session.GetString("CookieAcknowledged") == null;
+}
+
+<div class="text-center">
+    @if (Context.Session.GetString("Username") != null)
+    {
+        @if (showCookieNotice)
+        {
+            <div class="alert alert-warning alert-dismissible fade show" role="alert" id="cookie-alert">
+                <h5>Cookie Notice</h5>
+                <p>
+                    We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. By continuing to use this site, you agree to our use of cookies.
+                    For more details, please review our
+                    <a asp-controller="Home" asp-action="Privacy">Privacy Policy</a>.
+                </p>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-danger me-2 cookie-btn" data-choice="reject">Reject All</button>
+                    <button class="btn btn-warning cookie-btn" data-choice="accept">Accept All</button>
+                </div>
+            </div>
+        }
+
+        <h1 class="display-4">Welcome</h1>
+    }
+    else
+    {
+        <h1 class="display-4">Welcome</h1>
+        <p>If you don't have an account please sign up here: <a class="primary" asp-controller="Home" asp-action="SignUp" method="post">sign up</a></p>
+    }
+</div>
+
+<script>
+    document.querySelectorAll('.cookie-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const userChoice = button.getAttribute('data-choice');
+
+            fetch('/Home/SetCookieAcknowledged', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+                },
+                body: JSON.stringify({ choice: userChoice })
+            }).then(() => {
+                document.getElementById('cookie-alert').classList.remove('show');
+            });
+        });
+    });
+</script>
