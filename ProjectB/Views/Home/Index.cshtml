@@ -3,32 +3,50 @@
     var showCookieNotice = Context.Session.GetString("CookieAcknowledged") == null;
 }
 
-<div class="text-center">
-    @if (Context.Session.GetString("Username") != null)
-    {
-        @if (showCookieNotice)
+<div class="container mt-5">
+    <div class="text-center">
+        @if (Context.Session.GetString("Username") != null)
         {
-            <div class="alert alert-warning alert-dismissible fade show" role="alert" id="cookie-alert">
-                <h5>Cookie Notice</h5>
-                <p>
-                    We use cookies to enhance your browsing experience, analyze site traffic, and personalize content. By continuing to use this site, you agree to our use of cookies.
-                    For more details, please review our
-                    <a asp-controller="Home" asp-action="Privacy">Privacy Policy</a>.
-                </p>
-                <div class="d-flex justify-content-end">
-                    <button class="btn btn-danger me-2 cookie-btn" data-choice="reject">Reject All</button>
-                    <button class="btn btn-warning cookie-btn" data-choice="accept">Accept All</button>
+            @if (showCookieNotice)
+            {
+                <div class="alert alert-warning alert-dismissible fade show" role="alert" id="cookie-alert">
+                    <div class="d-flex flex-column align-items-start">
+                        <h5 class="fw-bold">Предупреждение за "бисквитки"</h5>
+                        <p>
+                            Нашият сайт използва така наречените "бисквитки" за да подобри вашето потребителско изживяване.а
+                            <a asp-controller="Home" asp-action="Privacy" class="text-decoration-underline">Правила и Поверителност</a>.
+                        </p>
+                        <div class="mt-3 d-flex justify-content-end w-100 gap-2">
+                            <button class="btn btn-outline-danger btn-sm cookie-btn" data-choice="reject">Отказвам всички</button>
+                            <button class="btn btn-primary btn-sm cookie-btn" data-choice="accept">Приемам всички</button>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <h1 class="display-4 mb-4">Добре дошли!</h1>
+
+            <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="~/assets/CarouselPng.png" class="d-block w-100 rounded" alt="Lesson Preview">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Най-нов урок: "За Любовта"</h5>
+                            <a asp-controller="Lessons" asp-action="ForLove" class="btn btn-success">Преглед</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         }
-
-        <h1 class="display-4">Welcome</h1>
-    }
-    else
-    {
-        <h1 class="display-4">Welcome</h1>
-        <p>If you don't have an account please sign up here: <a class="primary" asp-controller="Home" asp-action="SignUp" method="post">sign up</a></p>
-    }
+        else
+        {
+            <h1 class="display-4 mb-4">Добре дошли!</h1>
+            <p>
+                Ако нямате профил моля направете си от тук:
+                <a class="text-primary fw-bold" asp-controller="Home" asp-action="SignUp" method="post">Регистрация</a>
+            </p>
+        }
+    </div>
 </div>
 
 <script>
@@ -44,8 +62,30 @@
                 },
                 body: JSON.stringify({ choice: userChoice })
             }).then(() => {
-                document.getElementById('cookie-alert').classList.remove('show');
+                const cookieAlert = document.getElementById('cookie-alert');
+                cookieAlert.classList.add('fade-out');
+                setTimeout(() => cookieAlert.remove(), 500);
             });
         });
     });
 </script>
+
+<style>
+    .carousel-item img {
+        object-fit: cover;
+        height: 400px;
+    }
+
+    .fade-out {
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+
+    .btn {
+        transition: all 0.3s ease;
+    }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+</style>

@@ -1,0 +1,32 @@
+﻿@model List<TestQuestion>
+<div class="modal fade" id="testModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Тест: <span id="testTitle"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="questionContainer">
+                    <div class="mb-3">
+                        <span class="text-muted">Въпрос <span id="currentQuestionNum">1</span> от <span id="totalQuestions"></span></span>
+                    </div>
+                    <h4 id="questionText"></h4>
+                    <div id="optionsContainer" class="mt-3">
+                    </div>
+                </div>
+                <div id="resultsContainer" style="display: none;">
+                    <h4>Резултати</h4>
+                    <p>Вашият резултат: <span id="scoreDisplay"></span>%</p>
+                    <div class="alert alert-info">
+                        Благодарим за участието!
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Затвори</button>
+                <button type="button" class="btn btn-primary" id="nextQuestion">Следващ въпрос</button>
+            </div>
+        </div>
+    </div>
+</div>

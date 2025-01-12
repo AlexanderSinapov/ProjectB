@@ -1,4 +1,8 @@
-﻿<h1>
+﻿@*.../Views/Lessons/ForLove*@
+
+@await Html.PartialAsync("TestView")
+
+<h1>
     Проект по БЕЛ
     "За Любовта"
 </h1>
@@ -47,8 +51,21 @@
                     <li>Непълноценна връзка с Татяна.</li>
                 </ul>
 
+                <h5>VI. Отношение на автора</h5>
+                <ul>
+                    <li>Авторът съчувства на Татяна и критикува Онегин за неговия егоизъм и неспособност да обича истински.</li>
+                </ul>
+
+                <h5>VII. Нашето отношение</h5>
+                <ul>
+                    <li>
+                        Любовта е представена като сблъсък между искреност и студенина, като Пушкин ни показва трагизма на пропуснатите възможности.
+                    </li>
+                </ul>
+
+
                 <div class="justify-content-end">
-                    <a class="btn btn-success btn-sm">Към Теста</a>
+                    <button class="btn btn-success btn-sm test-button" data-work="onegin" data-bs-toggle="testModal" data-bs-target="#testModal">Към Теста</button>
                 </div>
             </div>
         </div>
@@ -88,8 +105,20 @@
                     <li>Балзак критикува егоизма на обществото и трагизма на бащинската любов.</li>
                 </ul>
 
+                <h5>VI. Отношение на автора</h5>
+                <ul>
+                    <li>Балзак изобличава егоизма на обществото и трагизма на бащинската любов.</li>
+                </ul>
+
+                <h5>VII. Нашето отношение</h5>
+                <ul>
+                    <li>
+                        Любовта на Дядо Горио е величава, но трагична, и разкрива жестокостта на материалистичния свят.
+                    </li>
+                </ul>
+
                 <div class="justify-content-end">
-                    <a class="btn btn-success btn-sm">Към Теста</a>
+                    <button class="btn btn-success btn-sm test-button" data-work="goriot" data-bs-toggle="testModal" data-bs-target="#testModal">Към Теста</button>
                 </div>
             </div>
         </div>
@@ -123,8 +152,25 @@
                     <li>Изневерява на съпруга си, което води до финансова разруха и трагичен край.</li>
                 </ul>
 
+                <h5>V. Взаимоотношения с останалите герои</h5>
+                <ul>
+                    <li>Съпругът й Шарл я обожава, но тя го презира: "Любовта му беше като клетка за нейния свободен дух."</li>
+                </ul>
+
+                <h5>VI. Отношение на автора</h5>
+                <ul>
+                    <li>Флобер осъжда романтичния идеализъм и подчертава опасностите от неудовлетвореността.</li>
+                </ul>
+
+                <h5>VII. Нашето отношение</h5>
+                <ul>
+                    <li>
+                        Любовта е представена като разрушителна илюзия, която води до гибел, когато не е подкрепена от реалността.
+                    </li>
+                </ul>
+
                 <div class="justify-content-end">
-                    <a class="btn btn-success btn-sm">Към Теста</a>
+                    <button class="btn btn-success btn-sm test-button" data-work="bovary" data-bs-toggle="testModal" data-bs-target="#testModal">Към Теста</button>
                 </div>
             </div>
         </div>
@@ -149,10 +195,24 @@
         които чете. Флобер я описва така: „Тя искаше да изживее любов, каквато не е срещала досега, любов екстатична и вечна.“ Реалността обаче я разочарова, и тя се отдалечава все повече от съпруга 
         си, Шарл, когото възприема като "добър, но твърде обикновен". „И този човек й се струваше най-добрият, който може да се намери на света.“
     </p>
+    <div class="card h-100">
+        <img src="@Url.Content("~/assets/Bovary.png")"
+             class="card-img-top img-fluid rounded d-block w-100"
+             alt="Евгений Онегин"
+             onerror="this.src='@Url.Content("~/assets/placeholder-image.jpg")'"
+             loading="lazy">
+    </div>
 
     <h2 class="text-center">
         Евгений Онегин: Самотата и пропуснатите шансове
     </h2>
+    <div class="card h-100">
+        <img src="@Url.Content("~/assets/Kilburne_George_Goodwin_Penning_A_L.png")"
+             class="card-img-top img-fluid rounded d-block w-100"
+             alt="Евгений Онегин"
+             onerror="this.src='@Url.Content("~/assets/placeholder-image.jpg")'"
+             loading="lazy">
+    </div>
     <p>
         Евгений Онегин, уморен от светския живот, търси смисъл в любовта. Неговата среща с Татяна е решаваща, но той отхвърля искрените й чувства, воден от своята гордост и безразличие. 
         Пушкин описва този момент така: „Но аз не съм създаден за блаженство; то е чуждо за моята душа. Напразно е вашето съвършенство: не съм достоен за него.“ По-късно, когато осъзнава 
@@ -167,6 +227,13 @@
         само за своите дъщери и за когото нищо друго не съществуваше“. Неговата история е трагична притча за бездушието и егоизма на буржоазното общество. „Неблагодарни са, но аз ги обичам – това е 
         моята съдба.“
     </p>
+    <div class="card h-100">
+        <img src="@Url.Content("~/assets/a147f12e-9b79-4452-9218-bda7bbb09811.png")"
+             class="card-img-top img-fluid rounded d-block w-100"
+             alt="Евгений Онегин"
+             onerror="this.src='@Url.Content("~/assets/placeholder-image.jpg")'"
+             loading="lazy">
+    </div>
 
     <h2 class="text-center">
         Сравнение и заключение

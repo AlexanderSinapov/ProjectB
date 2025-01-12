@@ -111,7 +111,7 @@ namespace ProjectB.Controllers
                 _logger.LogInformation("Model State is valid.");
                 if (model.Password != model.ConfirmPassword)
                 {
-                    ModelState.AddModelError("ConfirmPassword", "The password and confirmation password do not match.");
+                    ModelState.AddModelError("ConfirmPassword", "Confirmation password and password do not match.");
                     return View(model);
                 }
 

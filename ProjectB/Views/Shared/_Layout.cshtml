@@ -22,19 +22,19 @@
                         @if (Context.Session.GetString("Username") != null)
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Lessons"> Lessons</a>
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Lessons"> Уроци</a>
                             </li
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Credits">Credits</a>
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Credits">Заслуги</a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="SignIn"> Lessons</a>
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="SignIn"> Уроци</a>
                             </li
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Credits">Credits</a>
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Credits">Заслуги</a>
                             </li>
                         }
                     </ul>
@@ -42,19 +42,19 @@
                         @if (Context.Session.GetString("Username") != null)
                         {
                             <li class="nav-item">
-                                <span class="nav-link">Welcome, @Context.Session.GetString("Username")!</span>
+                                <span class="nav-link">Добре дошъл, @Context.Session.GetString("Username")!</span>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="SignOut">Sign Out</a>
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="SignOut">Излез от профил</a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="SignIn" method="get">Sign In</a>
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="SignIn" method="get">Влез/ </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link ms-2" asp-area="" asp-controller="Home" asp-action="SignUp" method="get">Sign Up</a>
+                                <a class="nav-link ms-2" asp-area="" asp-controller="Home" asp-action="SignUp" method="get">Направи профил</a>
                             </li>
                         }
                     </ul>
@@ -74,12 +74,13 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - ProjectB - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2024 - ProjectB - <a asp-area="" asp-controller="Home" asp-action="Privacy">Правила и поверителност</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/test.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

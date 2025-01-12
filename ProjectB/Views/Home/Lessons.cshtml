@@ -1,8 +1,8 @@
 ﻿@model ProjectB.Models.LessonsViewModel
 
 <h1>
-    Lessons
-    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#addForm">New Lesson</button>
+    Уроци
+    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#addForm">Нов Урок</button>
 </h1>
 
 @if (TempData["ErrorMessage"] != null)
@@ -28,7 +28,7 @@
                     <h2 class="display-5 fw-bold">@item.Title</h2>
                     <p class="col-md-8 fs-4">@item.Description</p>
                     <p class="text-muted">Created by @item.User.Username on @item.CreatedAt.ToString("MMM dd, yyyy")</p>
-                    <a asp-controller="Lessons" asp-action="LessonDetails" asp-route-id="@item.Id" class="btn btn-primary">View Lesson</a>
+                    <a asp-controller="Lessons" asp-action="LessonDetails" asp-route-id="@item.Id" class="btn btn-primary">Преглед на урок</a>
                 </div>
             </div>
         </div>
@@ -41,7 +41,7 @@
             <h2 class="display-5 fw-bold">"За Любовта"</h2>
             <p class="col-md-8 fs-4">Тема: "Евгений Онегин"- Александър Сергеевич Пушкин, "Дядо Горио"- Оноре дьо Балзак, "Мадам Бовари"- Гюстав Флобер</p>
             <p class="text-muted">Default</p>
-            <a asp-controller="Lessons" asp-action="ForLove" class="btn btn-primary">View Lesson</a> 
+            <a asp-controller="Lessons" asp-action="ForLove" class="btn btn-primary">Преглед на урок</a> 
         </div>
     </div>
 </div>
@@ -52,39 +52,39 @@
         <form asp-controller="Lessons" asp-action="Create" method="post" class="needs-validation" novalidate>
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addFormLabel">New Lesson</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="addFormLabel">Нов Урок</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group m-3">
-                        <label asp-for="NewLesson.Title">Lesson Name</label>
+                        <label asp-for="NewLesson.Title">Заглавие на урока</label>
                         <input asp-for="NewLesson.Title" class="form-control" required maxlength="50" />
                         <span asp-validation-for="NewLesson.Title" class="text-danger"></span>
                     </div>
                     <div class="form-group m-3">
-                        <label asp-for="NewLesson.Description">Description</label>
+                        <label asp-for="NewLesson.Description">Описание</label>
                         <input asp-for="NewLesson.Description" class="form-control" maxlength="500" />
                         <span asp-validation-for="NewLesson.Description" class="text-danger"></span>
                     </div>
                     <div class="form-group m-3">
-                        <label asp-for="NewLesson.VideoUrl">Video URL</label>
+                        <label asp-for="NewLesson.VideoUrl">Линк към видео</label>
                         <input asp-for="NewLesson.VideoUrl" class="form-control" type="url" />
                         <span asp-validation-for="NewLesson.VideoUrl" class="text-danger"></span>
                     </div>
                     <div class="form-group m-3">
-                        <label asp-for="NewLesson.DocumentUrl">Document URL</label>
+                        <label asp-for="NewLesson.DocumentUrl">Линк към текстов документ</label>
                         <input asp-for="NewLesson.DocumentUrl" class="form-control" type="url" />
                         <span asp-validation-for="NewLesson.DocumentUrl" class="text-danger"></span>
                     </div>
                     <div class="form-group m-3">
-                        <label asp-for="NewLesson.TextContent">Content</label>
+                        <label asp-for="NewLesson.TextContent">Текстово съдържание</label>
                         <textarea asp-for="NewLesson.TextContent" class="form-control" rows="5" maxlength="50000"></textarea>
                         <span asp-validation-for="NewLesson.TextContent" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Create Lesson</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Затвори</button>
+                    <button type="submit" class="btn btn-primary">Създай урок</button>
                 </div>
                 @Html.AntiForgeryToken()
             </div>
