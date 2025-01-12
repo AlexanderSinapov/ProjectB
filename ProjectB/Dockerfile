@@ -1,25 +1,29 @@
-# Use the .NET 8 runtime as the base image
+# See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+# This stage is used when running from VS in fast mode (Default for Debug configuration)
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+USER $APP_UID
 WORKDIR /app
+EXPOSE 8080
+EXPOSE 8081
 
-# Use the .NET 8 SDK for the build process
+
+# This stage is used to build the service project
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-
-# Copy and restore project dependencies
-COPY ["ProjectB.csproj", "./"]
-RUN dotnet restore "./ProjectB.csproj"
-
-# Copy the rest of your app files and build it
+COPY ["ProjectB/ProjectB.csproj", "ProjectB/"]
+RUN dotnet restore "./ProjectB/ProjectB.csproj"
 COPY . .
-WORKDIR "/src/."
-RUN dotnet build "ProjectB.csproj" -c Release -o /app/build
+WORKDIR "/src/ProjectB"
+RUN dotnet build "./ProjectB.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-# Publish the app
+# This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
-RUN dotnet publish "ProjectB.csproj" -c Release -o /app/publish
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "./ProjectB.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-# Final stage: use the runtime to run the app
+# This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
