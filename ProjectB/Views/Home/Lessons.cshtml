@@ -58,12 +58,12 @@
                 <div class="modal-body">
                     <div class="form-group m-3">
                         <label asp-for="NewLesson.Title">Заглавие на урока</label>
-                        <input asp-for="NewLesson.Title" class="form-control" required maxlength="50" />
+                        <input asp-for="NewLesson.Title" class="form-control" required />
                         <span asp-validation-for="NewLesson.Title" class="text-danger"></span>
                     </div>
                     <div class="form-group m-3">
                         <label asp-for="NewLesson.Description">Описание</label>
-                        <input asp-for="NewLesson.Description" class="form-control" maxlength="500" />
+                        <input asp-for="NewLesson.Description" class="form-control" />
                         <span asp-validation-for="NewLesson.Description" class="text-danger"></span>
                     </div>
                     <div class="form-group m-3">
@@ -78,7 +78,7 @@
                     </div>
                     <div class="form-group m-3">
                         <label asp-for="NewLesson.TextContent">Текстово съдържание</label>
-                        <textarea asp-for="NewLesson.TextContent" class="form-control" rows="5" maxlength="50000"></textarea>
+                        <textarea asp-for="NewLesson.TextContent" class="form-control" rows="5"></textarea>
                         <span asp-validation-for="NewLesson.TextContent" class="text-danger"></span>
                     </div>
                 </div>

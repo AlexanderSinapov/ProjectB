@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ProjectB.Controllers;
 using ProjectB.Data;
 using ProjectB.Models;
+using System.Text;
 
 public class LessonsController : Controller
 {
@@ -11,6 +12,8 @@ public class LessonsController : Controller
 
     public LessonsController(ApplicationDbContext context, ILogger<HomeController> logger)
     {
+
+        Console.OutputEncoding = Encoding.UTF8;
         _logger = logger;
         _context = context;
     }
@@ -52,10 +55,16 @@ public class LessonsController : Controller
             return RedirectToAction("SignIn", "Home");
         }
 
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
+            // Return to the view with validation errors
+            var lessons = await _context.Lessons
+                .Include(l => l.User)
+                .ToListAsync();
+
+            model.LessonsList = lessons;
             TempData["ErrorMessage"] = "Please correct the highlighted errors.";
-            return RedirectToAction("Lessons", "Home");
+            return View("~/Views/Home/Lessons.cshtml", model);
         }
 
         try

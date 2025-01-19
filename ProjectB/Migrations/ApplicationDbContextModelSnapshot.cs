@@ -32,13 +32,16 @@ namespace ProjectB.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
                     b.Property<string>("DocumentUrl")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("TextContent")
+                        .IsRequired()
                         .HasMaxLength(50000)
                         .HasColumnType("character varying(50000)");
 
@@ -51,6 +54,7 @@ namespace ProjectB.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("VideoUrl")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");

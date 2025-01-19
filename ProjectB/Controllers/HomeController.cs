@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,8 @@ namespace ProjectB.Controllers
         private readonly ApplicationDbContext _context;
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
+
+            Console.OutputEncoding = Encoding.UTF8;
             _logger = logger;
             _context = context;
         }
@@ -111,7 +114,7 @@ namespace ProjectB.Controllers
                 _logger.LogInformation("Model State is valid.");
                 if (model.Password != model.ConfirmPassword)
                 {
-                    ModelState.AddModelError("ConfirmPassword", "Confirmation password and password do not match.");
+                    ModelState.AddModelError("ConfirmPassword", "password an Confirmation password do not match.");
                     return View(model);
                 }
 

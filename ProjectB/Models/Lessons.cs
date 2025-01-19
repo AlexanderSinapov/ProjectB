@@ -16,14 +16,14 @@ namespace ProjectB.Models
         public string Title { get; set; }
 
         [StringLength(500, ErrorMessage = "Description cannot exceed 500 characters")]
-        public string? Description { get; set; }
+        public string Description { get; set; }
 
-        public string? VideoUrl { get; set; }
+        public string VideoUrl { get; set; }
 
-        public string? DocumentUrl { get; set; }
+        public string DocumentUrl { get; set; }
 
         [StringLength(50000, ErrorMessage = "Text content cannot exceed 50000 characters")]
-        public string? TextContent { get; set; }
+        public string TextContent { get; set; }
 
         [AllowNull]
         public int UserId { get; set; }
