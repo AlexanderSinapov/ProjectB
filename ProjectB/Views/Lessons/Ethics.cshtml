@@ -18,6 +18,7 @@
             --light-color: #f0f7ff;
             --gradient-start: #0466c8;
             --gradient-end: #20c997;
+            --header-height: 100px; /* Define header height for spacing */
         }
 
         * {
@@ -38,19 +39,18 @@
         .container {
             position: relative;
             min-height: 500vh; /* Long enough for scrolling */
+            padding-top: var(--header-height); /* Add padding to account for fixed header */
         }
 
-        /* Background elements */
+        /* Enhanced futuristic background elements */
         .bg-grid {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image:
-                radial-gradient(circle at 25% 25%, rgba(32, 201, 151, 0.05) 2%, transparent 2%),
-                radial-gradient(circle at 75% 75%, rgba(4, 102, 200, 0.05) 2%, transparent 2%);
-            background-size: 50px 50px;
+            background-image: linear-gradient(rgba(32, 201, 151, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(32, 201, 151, 0.03) 1px, transparent 1px), radial-gradient(circle at 25% 25%, rgba(32, 201, 151, 0.05) 2%, transparent 2%), radial-gradient(circle at 75% 75%, rgba(4, 102, 200, 0.05) 2%, transparent 2%);
+            background-size: 50px 50px, 50px 50px, 50px 50px, 50px 50px;
             z-index: -1;
         }
 
@@ -66,41 +66,77 @@
             filter: blur(40px);
         }
 
+        /* Floating particles for futuristic effect */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            display: block;
+            background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+
         header {
             text-align: center;
             padding: 2rem 0;
-            background: rgba(13, 17, 23, 0.8);
+            background: rgba(13, 17, 23, 0.9);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            z-index: 100;
+            z-index: 1000; /* Ensure header is always on top */
+            height: var(--header-height);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
         }
 
-        header h1 {
-            color: white;
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 0 10px rgba(32, 201, 151, 0.5);
-            font-weight: 600;
-        }
+            header h1 {
+                color: white;
+                font-size: 2.5rem;
+                margin-bottom: 0.5rem;
+                text-shadow: 0 0 10px rgba(32, 201, 151, 0.5);
+                font-weight: 600;
+                position: relative;
+                display: inline-block;
+            }
 
-        header p {
-            color: var(--branch-color);
-            font-weight: 300;
-            letter-spacing: 1px;
-        }
+                header h1::after {
+                    content: '';
+                    position: absolute;
+                    width: 50%;
+                    height: 2px;
+                    bottom: -5px;
+                    left: 25%;
+                    background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+                }
 
-        /* Main vertical line */
+            header p {
+                color: var(--branch-color);
+                font-weight: 300;
+                letter-spacing: 1px;
+            }
+
+        /* Main vertical line with improved styling */
         .main-line {
             position: fixed;
             left: 50%;
-            top: 0;
+            top: var(--header-height); /* Start after header */
             width: var(--branch-width);
             background: linear-gradient(to bottom, rgba(4, 102, 200, 0.2), rgba(4, 102, 200, 0.1));
-            height: 100vh;
+            height: calc(100vh - var(--header-height)); /* Adjust height */
             transform: translateX(-50%);
             z-index: 1;
             box-shadow: 0 0 15px rgba(4, 102, 200, 0.3);
@@ -110,7 +146,7 @@
         .main-line-progress {
             position: fixed;
             left: 50%;
-            top: 0;
+            top: var(--header-height); /* Start after header */
             width: var(--branch-width);
             background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
             height: 0; /* Grows with scroll */
@@ -119,21 +155,43 @@
             box-shadow: 0 0 20px rgba(32, 201, 151, 0.6);
         }
 
-        /* Branch container */
+        /* Branch container with enhanced styling */
         .branch-point {
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
             background: radial-gradient(circle, var(--gradient-end), var(--gradient-start));
             z-index: 3;
             opacity: 0;
-            box-shadow: 0 0 12px rgba(32, 201, 151, 0.8);
+            box-shadow: 0 0 15px rgba(32, 201, 151, 0.8);
         }
 
-        /* Branch line */
+        /* Pulse animation for active branch points */
+        @keyframes pulse {
+            0%
+
+        {
+            box-shadow: 0 0 0 0 rgba(32, 201, 151, 0.7);
+        }
+
+        70% {
+            box-shadow: 0 0 0 10px rgba(32, 201, 151, 0);
+        }
+
+        100% {
+            box-shadow: 0 0 0 0 rgba(32, 201, 151, 0);
+        }
+
+        }
+
+        .branch-point.active {
+            animation: pulse 2s infinite;
+        }
+
+        /* Branch line with improved curved styling */
         .branch-curve {
             position: absolute;
             left: 50%;
@@ -147,46 +205,45 @@
             box-shadow: 0 0 10px rgba(32, 201, 151, 0.4);
         }
 
-        /* Even branches go right, odd go left with curved paths */
+        /* Enhanced curved paths for branches */
         .branch-point:nth-child(odd) .branch-curve {
             transform: translateX(0);
-            /* Using clip-path for curved line effect */
             clip-path: ellipse(100% 50% at 0% 50%);
         }
 
         .branch-point:nth-child(even) .branch-curve {
             transform: translateX(0) scaleX(-1);
-            /* Using clip-path for curved line effect */
             clip-path: ellipse(100% 50% at 0% 50%);
         }
 
-        /* Branch content */
+        /* Modernized branch content */
         .branch-content {
             position: absolute;
             width: 400px;
             padding: 1.8rem;
             background: rgba(22, 27, 34, 0.8);
             border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
             border-left: 3px solid;
             border-image: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end)) 1;
             opacity: 0;
             z-index: 4;
             transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            transform: perspective(1000px) rotateY(0deg);
         }
 
-        /* Even branches go right, odd go left */
+        /* Improved positioning to avoid header overlap */
         .branch-point:nth-child(odd) .branch-content {
             left: 120px;
             top: -80px;
-            transform: translateX(20px);
+            transform: translateX(20px) perspective(1000px) rotateY(-5deg);
         }
 
         .branch-point:nth-child(even) .branch-content {
             right: 120px;
             top: -80px;
-            transform: translateX(-20px);
+            transform: translateX(-20px) perspective(1000px) rotateY(5deg);
         }
 
         .branch-content h2 {
@@ -197,7 +254,19 @@
             background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
         }
+
+            .branch-content h2::after {
+                content: '';
+                position: absolute;
+                bottom: -4px;
+                left: 0;
+                width: 40px;
+                height: 2px;
+                background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+            }
 
         .translation {
             color: #a0a0a0;
@@ -227,18 +296,33 @@
             letter-spacing: 1px;
         }
 
-        /* Show content animations */
+        /* Show content animations - enhanced for more futuristic feel */
         .branch-content.visible {
             opacity: 1;
-            transform: translateX(0);
+            transform: translateX(0) perspective(1000px) rotateY(0deg);
+        }
+
+        /* Scrollbar styling for futuristic look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(13, 17, 23, 0.8);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
+            border-radius: 4px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Background elements -->
+        <!-- Enhanced background elements -->
         <div class="bg-grid"></div>
         <div class="bg-glow"></div>
+        <div class="particles"></div>
 
         <header>
             <h1>@ViewBag.Title</h1>
@@ -304,11 +388,12 @@
         }
         };
 
-            // Render timeline items
+            // Render timeline items with adjusted positioning to account for header
             for (int i = 0; i < timelineItems.Count; i++)
             {
                 var item = timelineItems[i];
-                <div class="branch-point" style="top: @item.Position;">
+                // Add header height to branch point positioning to prevent overlap
+                <div class="branch-point" style="top: calc(@item.Position + var(--header-height));">
                     <div class="branch-curve"></div>
                     <div class="branch-content">
                         <h2>@item.Title</h2>
@@ -329,6 +414,68 @@
             const branchPoints = $('.branch-point');
             const branchCurves = $('.branch-curve');
             const branchContents = $('.branch-content');
+            const headerHeight = parseInt($(':root').css('--header-height'));
+
+            // Create particles for futuristic effect
+            function createParticles() {
+                const particles = $('.particles');
+                const particleCount = 30;
+
+                for (let i = 0; i < particleCount; i++) {
+                    const size = Math.random() * 3 + 1;
+                    const particle = $('<div class="particle"></div>');
+
+                    particle.css({
+                        left: Math.random() * 100 + '%',
+                        top: Math.random() * 100 + '%',
+                        width: size + 'px',
+                        height: size + 'px',
+                        animationDuration: (Math.random() * 10 + 10) + 's',
+                        animationDelay: (Math.random() * 5) + 's'
+                    });
+
+                    particles.append(particle);
+
+                    // Add floating animation
+                    const x = Math.random() * 100;
+                    const y = Math.random() * 100;
+                    particle.animate({
+                        top: y + '%',
+                        left: x + '%'
+                    }, {
+                        duration: Math.random() * 20000 + 10000,
+                        easing: 'linear',
+                        complete: function() {
+                            $(this).css({
+                                top: Math.random() * 100 + '%',
+                                left: Math.random() * 100 + '%'
+                            });
+
+                            // Recursive animation for continuous movement
+                            createParticleAnimation($(this));
+                        }
+                    });
+                }
+            }
+
+            function createParticleAnimation(particle) {
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+
+                particle.animate({
+                    top: y + '%',
+                    left: x + '%'
+                }, {
+                    duration: Math.random() * 20000 + 10000,
+                    easing: 'linear',
+                    complete: function() {
+                        createParticleAnimation($(this));
+                    }
+                });
+            }
+
+            // Create the particles
+            createParticles();
 
             // Total document height for scroll calculations
             const totalHeight = $(document).height() - $(window).height();
@@ -345,7 +492,9 @@
                 // Check each branch point
                 branchPoints.each(function(index) {
                     const point = $(this);
-                    const pointPosition = parseInt(point.css('top')) / $(window).height() * 100 / 100; // Convert to decimal
+                    // Adjust calculation to account for header height
+                    const pointPositionPx = parseInt(point.css('top'));
+                    const pointPosition = (pointPositionPx - headerHeight) / $(window).height() * 100 / 100;
                     const curve = branchCurves.eq(index);
                     const content = branchContents.eq(index);
 
@@ -353,6 +502,7 @@
                     if (scrollProgress * 5 > pointPosition) { // Multiply by 5 for container height of 500vh
                         // Show branch point with a glow effect
                         point.css('opacity', '1');
+                        point.addClass('active');
 
                         // Animate branch curve
                         curve.css('width', '120px');
@@ -364,6 +514,7 @@
                     } else {
                         // Hide when scrolling back up
                         point.css('opacity', '0');
+                        point.removeClass('active');
                         curve.css('width', '0');
                         content.removeClass('visible');
                     }
@@ -386,7 +537,16 @@
                 const x = e.clientX / $(window).width();
                 const y = e.clientY / $(window).height();
 
-                bgGlow.css('transform', `translate(calc(-50% + ${x * 20}px), calc(-50% + ${y * 20}px))`);
+                bgGlow.css('transform', `translate(calc(-50% + ${x * 30}px), calc(-50% + ${y * 30}px))`);
+
+                // Add parallax effect to active branch content
+                $('.branch-content.visible').each(function() {
+                    const content = $(this);
+                    const xOffset = (x - 0.5) * 10;
+                    const yOffset = (y - 0.5) * 10;
+
+                    content.css('transform', `translateX(0) perspective(1000px) rotateY(${xOffset}deg) rotateX(${-yOffset}deg)`);
+                });
             });
         });
     </script>
