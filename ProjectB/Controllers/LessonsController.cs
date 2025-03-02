@@ -111,6 +111,11 @@ public class LessonsController : Controller
         return View();
     }
 
+    public IActionResult Ethics()
+    {
+        return View();
+    }
+
     [HttpPost]
     public async Task<IActionResult> Edit(int id, Lessons lesson)
     {

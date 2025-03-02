@@ -9,6 +9,8 @@
 <form asp-action="SignIn" method="post" id="SignInForm">
     @Html.AntiForgeryToken()
 
+    <div asp-validation-summary="All" class="alert alert-danger"></div>
+
     <div class="form-group m-3">
         <label for="Email">E-Mail</label>
         <input type="email" class="form-control" id="Email" placeholder="E-Mail" asp-for="Email" required>
@@ -27,8 +29,6 @@
     <div class="m-3">
         <a class="primary" asp-action="SignUp">Нямате профил? Създайте си тук.</a>
     </div>
-
-    <div asp-validation-summary="All" class="text-danger"></div>
 </form>
 
 @section Scripts {

@@ -1,0 +1,394 @@
+﻿@{
+    ViewBag.Title = "Философия на Етиката";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main-color: #0466c8;
+            --branch-color: #20c997;
+            --branch-width: 3px;
+            --light-color: #f0f7ff;
+            --gradient-start: #0466c8;
+            --gradient-end: #20c997;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0d1117, #161b22);
+            color: #e6e6e6;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .container {
+            position: relative;
+            min-height: 500vh; /* Long enough for scrolling */
+        }
+
+        /* Background elements */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle at 25% 25%, rgba(32, 201, 151, 0.05) 2%, transparent 2%),
+                radial-gradient(circle at 75% 75%, rgba(4, 102, 200, 0.05) 2%, transparent 2%);
+            background-size: 50px 50px;
+            z-index: -1;
+        }
+
+        .bg-glow {
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            width: 60vw;
+            height: 60vh;
+            background: radial-gradient(ellipse, rgba(32, 201, 151, 0.1) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            filter: blur(40px);
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem 0;
+            background: rgba(13, 17, 23, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        header h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(32, 201, 151, 0.5);
+            font-weight: 600;
+        }
+
+        header p {
+            color: var(--branch-color);
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* Main vertical line */
+        .main-line {
+            position: fixed;
+            left: 50%;
+            top: 0;
+            width: var(--branch-width);
+            background: linear-gradient(to bottom, rgba(4, 102, 200, 0.2), rgba(4, 102, 200, 0.1));
+            height: 100vh;
+            transform: translateX(-50%);
+            z-index: 1;
+            box-shadow: 0 0 15px rgba(4, 102, 200, 0.3);
+        }
+
+        /* Active portion of the line */
+        .main-line-progress {
+            position: fixed;
+            left: 50%;
+            top: 0;
+            width: var(--branch-width);
+            background: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end));
+            height: 0; /* Grows with scroll */
+            transform: translateX(-50%);
+            z-index: 2;
+            box-shadow: 0 0 20px rgba(32, 201, 151, 0.6);
+        }
+
+        /* Branch container */
+        .branch-point {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--gradient-end), var(--gradient-start));
+            z-index: 3;
+            opacity: 0;
+            box-shadow: 0 0 12px rgba(32, 201, 151, 0.8);
+        }
+
+        /* Branch line */
+        .branch-curve {
+            position: absolute;
+            left: 50%;
+            width: 0; /* Will expand with animation */
+            height: var(--branch-width);
+            background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+            z-index: 2;
+            border-radius: 20px;
+            transform-origin: left center;
+            opacity: 0.8;
+            box-shadow: 0 0 10px rgba(32, 201, 151, 0.4);
+        }
+
+        /* Even branches go right, odd go left with curved paths */
+        .branch-point:nth-child(odd) .branch-curve {
+            transform: translateX(0);
+            /* Using clip-path for curved line effect */
+            clip-path: ellipse(100% 50% at 0% 50%);
+        }
+
+        .branch-point:nth-child(even) .branch-curve {
+            transform: translateX(0) scaleX(-1);
+            /* Using clip-path for curved line effect */
+            clip-path: ellipse(100% 50% at 0% 50%);
+        }
+
+        /* Branch content */
+        .branch-content {
+            position: absolute;
+            width: 400px;
+            padding: 1.8rem;
+            background: rgba(22, 27, 34, 0.8);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border-left: 3px solid;
+            border-image: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end)) 1;
+            opacity: 0;
+            z-index: 4;
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* Even branches go right, odd go left */
+        .branch-point:nth-child(odd) .branch-content {
+            left: 120px;
+            top: -80px;
+            transform: translateX(20px);
+        }
+
+        .branch-point:nth-child(even) .branch-content {
+            right: 120px;
+            top: -80px;
+            transform: translateX(-20px);
+        }
+
+        .branch-content h2 {
+            color: white;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .translation {
+            color: #a0a0a0;
+            font-size: 0.9rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .branch-content p {
+            color: #d0d0d0;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem 0;
+            background: rgba(13, 17, 23, 0.8);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--branch-color);
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* Show content animations */
+        .branch-content.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Background elements -->
+        <div class="bg-grid"></div>
+        <div class="bg-glow"></div>
+
+        <header>
+            <h1>@ViewBag.Title</h1>
+            <p>Интерактивно представяне на основните концепции</p>
+        </header>
+
+        <!-- The main vertical line that grows as user scrolls -->
+        <div class="main-line"></div>
+        <div class="main-line-progress"></div>
+
+        @{
+            // Define timeline data
+            var timelineItems = new List<dynamic>
+        {
+        new
+        {
+        Position = "30vh",
+        Title = "Как би изглеждал животът ни без етика?",
+        TranslatedTitle = "What would life look like without ethics?",
+        Content = "В свят без етика, обществото би се разпаднало поради липса на доверие и сътрудничество. Примери включват: Хобсовото \"естествено състояние\" на \"война на всички срещу всички\". Без етични основи, нямаме причина да уважаваме правата на другите."
+        },
+        new
+        {
+        Position = "80vh",
+        Title = "Защо учим етика?",
+        TranslatedTitle = "Why do we study ethics?",
+        Content = "Изучаването на етика ни позволява да вземаме обмислени морални решения, да разбираме моралните си интуиции и да изграждаме по-справедливи общества. Етиката ни дава инструменти за разрешаване на сложни морални дилеми."
+        },
+        new
+        {
+        Position = "130vh",
+        Title = "Какво не е етика?",
+        TranslatedTitle = "What is not ethics?",
+        Content = "Етиката не е просто следване на закони, придържане към културни норми, следване на религиозни заповеди или подчиняване на емоционални реакции. Много неморални действия са законни, а моралните стандарти често изискват повече от законовите минимуми."
+        },
+        new
+        {
+        Position = "180vh",
+        Title = "Къде помага етиката днес?",
+        TranslatedTitle = "Where does ethics help today?",
+        Content = "Етиката се прилага в множество съвременни области: биоетика (медицински иновации, ИИ, генно инженерство), екологична етика (климатични промени), бизнес етика (корпоративна отговорност) и дигитална етика (поверителност, социални медии)."
+        },
+        new
+        {
+        Position = "230vh",
+        Title = "Историческо развитие на идеята за етиката",
+        TranslatedTitle = "Historical development of ethics",
+        Content = "Етиката еволюира от предфилософски системи в древните цивилизации през систематичната етика в Древна Гърция, средновековната религиозна етика, до съвременните плуралистични подходи. Всеки период допринася с уникални перспективи."
+        },
+        new
+        {
+        Position = "280vh",
+        Title = "Аристотел за етиката",
+        TranslatedTitle = "Aristotle on ethics",
+        Content = "Аристотел развива етика на добродетелта, фокусирана върху изграждането на характера и постигането на \"евдемония\" (процъфтяване). Той описва добродетелите като \"златна среда\" между крайностите и подчертава ролята на практическата мъдрост."
+        },
+        new
+        {
+        Position = "330vh",
+        Title = "Кант и други философи за етиката",
+        TranslatedTitle = "Kant and other philosophers on ethics",
+        Content = "Кант развива категоричния императив и етика, основана на дълга. Други важни подходи включват утилитаризма на Мил, критиката на Ницше на конвенционалния морал, и добродетелта и хармонията на Конфуций във взаимоотношенията."
+        }
+        };
+
+            // Render timeline items
+            for (int i = 0; i < timelineItems.Count; i++)
+            {
+                var item = timelineItems[i];
+                <div class="branch-point" style="top: @item.Position;">
+                    <div class="branch-curve"></div>
+                    <div class="branch-content">
+                        <h2>@item.Title</h2>
+                        <h3 class="translation">@item.TranslatedTitle</h3>
+                        <p>@Html.Raw(item.Content)</p>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+    @* Include jQuery and then the custom script *@
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Elements
+            const mainLineProgress = $('.main-line-progress');
+            const branchPoints = $('.branch-point');
+            const branchCurves = $('.branch-curve');
+            const branchContents = $('.branch-content');
+
+            // Total document height for scroll calculations
+            const totalHeight = $(document).height() - $(window).height();
+
+            // Animation control
+            function updateOnScroll() {
+                const scrollPosition = $(window).scrollTop();
+                const scrollProgress = scrollPosition / totalHeight;
+
+                // Update main line progress (height grows as user scrolls)
+                const lineHeight = Math.min(100, scrollProgress * 100);
+                mainLineProgress.css('height', `${lineHeight}vh`);
+
+                // Check each branch point
+                branchPoints.each(function(index) {
+                    const point = $(this);
+                    const pointPosition = parseInt(point.css('top')) / $(window).height() * 100 / 100; // Convert to decimal
+                    const curve = branchCurves.eq(index);
+                    const content = branchContents.eq(index);
+
+                    // When scroll passes the branch point position
+                    if (scrollProgress * 5 > pointPosition) { // Multiply by 5 for container height of 500vh
+                        // Show branch point with a glow effect
+                        point.css('opacity', '1');
+
+                        // Animate branch curve
+                        curve.css('width', '120px');
+
+                        // Show content with elegant transition
+                        setTimeout(function() {
+                            content.addClass('visible');
+                        }, 300);
+                    } else {
+                        // Hide when scrolling back up
+                        point.css('opacity', '0');
+                        curve.css('width', '0');
+                        content.removeClass('visible');
+                    }
+                });
+            }
+
+            // Initial update
+            updateOnScroll();
+
+            // Scroll event listener
+            $(window).on('scroll', updateOnScroll);
+
+            // Add transition effects
+            branchPoints.css('transition', 'opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1)');
+            branchCurves.css('transition', 'width 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)');
+
+            // Create parallax effect for background
+            $(window).on('mousemove', function(e) {
+                const bgGlow = $('.bg-glow');
+                const x = e.clientX / $(window).width();
+                const y = e.clientY / $(window).height();
+
+                bgGlow.css('transform', `translate(calc(-50% + ${x * 20}px), calc(-50% + ${y * 20}px))`);
+            });
+        });
+    </script>
+</body>
+</html>
