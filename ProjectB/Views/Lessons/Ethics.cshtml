@@ -260,19 +260,154 @@
             line-height: 1.7;
         }
 
+        /* Enhanced futuristic footer */
         footer {
             text-align: center;
-            padding: 1.5rem 0;
-            background: rgba(13, 17, 23, 0.8);
-            backdrop-filter: blur(10px);
+            padding: 3rem 0;
+            background: rgba(13, 17, 23, 0.95);
+            backdrop-filter: blur(15px);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--branch-color);
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .footer-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            z-index: 2;
+        }
+
+        .footer-glow {
+            position: absolute;
+            bottom: -50%;
+            left: 50%;
+            width: 70%;
+            height: 300px;
+            background: radial-gradient(ellipse, rgba(32, 201, 151, 0.15) 0%, transparent 70%);
+            transform: translateX(-50%);
+            filter: blur(50px);
+            z-index: 1;
+        }
+
+        .footer-grid {
             position: absolute;
             bottom: 0;
+            left: 0;
             width: 100%;
-            font-weight: 300;
-            letter-spacing: 1px;
+            height: 100%;
+            background-image: linear-gradient(rgba(32, 201, 151, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(32, 201, 151, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.3;
+            z-index: 1;
         }
+
+        .quote-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            padding: 2rem;
+            background: rgba(4, 102, 200, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border-left: 3px solid;
+            border-image: linear-gradient(to bottom, var(--gradient-start), var(--gradient-end)) 1;
+        }
+
+        .quote-mark {
+            position: absolute;
+            font-size: 6rem;
+            color: rgba(32, 201, 151, 0.1);
+            top: -1rem;
+            left: 1rem;
+            font-family: sans-serif;
+        }
+
+        .quote-text {
+            position: relative;
+            font-size: 1.2rem;
+            font-weight: 300;
+            font-style: italic;
+            color: #e6e6e6;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        .quote-author {
+            text-align: right;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--branch-color);
+        }
+
+        .credit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .credit-card {
+            background: rgba(22, 27, 34, 0.5);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .credit-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+            }
+
+        .credit-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: white;
+            position: relative;
+            display: inline-block;
+        }
+
+            .credit-title::after {
+                content: '';
+                position: absolute;
+                bottom: -5px;
+                left: 0;
+                width: 30px;
+                height: 2px;
+                background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+            }
+
+        .credit-content {
+            font-size: 0.9rem;
+            color: #d0d0d0;
+            line-height: 1.6;
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: #777;
+            position: relative;
+        }
+
+            .copyright::before {
+                content: '';
+                position: absolute;
+                top: -20px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 50px;
+                height: 1px;
+                background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+            }
 
         /* Show content animations - enhanced for more futuristic feel */
         .branch-content.visible {
@@ -381,6 +516,51 @@
                 </div>
             }
         }
+
+        <!-- Enhanced Futuristic Footer with Quotes and Credits -->
+        <footer>
+            <div class="footer-glow"></div>
+            <div class="footer-grid"></div>
+
+            <div class="footer-container">
+                <!-- Bulgarian Quote Section -->
+                <div class="quote-container">
+                    <div class="quote-mark">"</div>
+                    <p class="quote-text">
+                        "Етиката е знание за това как трябва да живеем. Тя е изкуство на доброто съществуване, което ни помага да разпознаваме и следваме онези ценности, които правят живота ни достоен и смислен."
+                    </p>
+                    <p class="quote-author">— Проф. Димитър Денков</p>
+                </div>
+
+                <!-- Credits Section in a Modern Grid Layout -->
+                <div class="credit-grid">
+                    <div class="credit-card">
+                        <h3 class="credit-title">За проекта</h3>
+                        <p class="credit-content">
+                            Интерактивна образователна платформа, разработена за да представи основните концепции на етиката по увлекателен начин. Проектът комбинира съвременен дизайн с философски идеи от древността до наши дни.
+                        </p>
+                    </div>
+
+                    <div class="credit-card">
+                        <h3 class="credit-title">Екип и сътрудници</h3>
+                        <p class="credit-content">
+                            Разработено от екип ученици от Професионална Гимназия по Високи Технологии "А. С. Попов".
+                        </p>
+                    </div>
+
+                    <div class="credit-card">
+                        <h3 class="credit-title">Ресурси</h3>
+                        <p class="credit-content">
+                            Съдържанието е базирано на академични източници и съвременни изследвания в областта на етиката. Препоръчваме книгите "Етика" от Аристотел, "Критика на практическия разум" от Кант и "Увод във философията на морала" от Стоян Бъчваров.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="copyright">
+                    © 2025 Философия на Етиката • Всички права запазени • ПГВТ "А. С. Попов" • Александър Синапов, Мартин Динев
+                </div>
+            </div>
+        </footer>
     </div>
 
     @* Include jQuery and then the custom script *@
@@ -393,6 +573,7 @@
             const branchCurves = $('.branch-curve');
             const branchContents = $('.branch-content');
             const headerHeight = parseInt($(':root').css('--header-height'));
+            const creditCards = $('.credit-card');
 
             // Create particles for futuristic effect
             function createParticles() {
@@ -497,6 +678,18 @@
                         content.removeClass('visible');
                     }
                 });
+
+                // Animate credit cards when they come into view
+                const footerTop = $('footer').offset().top;
+                const windowHeight = $(window).height();
+
+                if (scrollPosition + windowHeight > footerTop) {
+                    creditCards.each(function(index) {
+                        setTimeout(() => {
+                            $(this).addClass('visible');
+                        }, index * 150);
+                    });
+                }
             }
 
             // Initial update
@@ -508,14 +701,17 @@
             // Add transition effects
             branchPoints.css('transition', 'opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1)');
             branchCurves.css('transition', 'width 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)');
+            creditCards.css('transition', 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1)');
 
             // Create parallax effect for background
             $(window).on('mousemove', function(e) {
                 const bgGlow = $('.bg-glow');
+                const footerGlow = $('.footer-glow');
                 const x = e.clientX / $(window).width();
                 const y = e.clientY / $(window).height();
 
                 bgGlow.css('transform', `translate(calc(-50% + ${x * 30}px), calc(-50% + ${y * 30}px))`);
+                footerGlow.css('transform', `translate(calc(-50% + ${x * 20}px), calc(-50% + ${y * 20}px))`);
 
                 // Add parallax effect to active branch content
                 $('.branch-content.visible').each(function() {
@@ -525,8 +721,17 @@
 
                     content.css('transform', `translateX(0) perspective(1000px) rotateY(${xOffset}deg) rotateX(${-yOffset}deg)`);
                 });
+
+                // Add subtle parallax to credit cards
+                $('.credit-card').each(function() {
+                    const card = $(this);
+                    const xOffset = (x - 0.5) * 5;
+                    const yOffset = (y - 0.5) * 5;
+
+                    card.css('transform', `translateY(-5px) perspective(1000px) rotateY(${xOffset}deg) rotateX(${-yOffset}deg)`);
+                });
             });
-        });
+
+            
     </script>
 </body>
-</html>
